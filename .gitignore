@@ -1,0 +1,6 @@
+# temporary files
+*.swp
+
+# restored by npm install
+node_modules/
+

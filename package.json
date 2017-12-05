@@ -1,0 +1,26 @@
+{
+  "name": "css3-examples",
+  "version": "1.0.0",
+  "description": "CSS3 examples",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "tsc && tsc --watch",
+    "serve": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thatseeyou/css3-examples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thatseeyou/css3-examples/issues"
+  },
+  "homepage": "https://github.com/thatseeyou/css3-examples#readme",
+  "devDependencies": {
+    "lite-server": "^2.3.0",
+    "typescript": "^2.6.2"
+  }
+}

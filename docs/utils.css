@@ -1,0 +1,38 @@
+.sources-container {
+    --item-space: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: calc(-1 * var(--item-space));
+}
+.sources-container:nth-of-type(n+2) {
+    margin-top: 3em;
+}
+.sources-container > pre {
+    flex: 1 0 auto;
+    margin-right: var(--item-space);
+
+    font-size: 14px;
+    line-height: 1.2;
+}
+.sources-container > pre:nth-of-type(2) {
+    /* 여분의 공간은 1:4의 비율로 나누어서 텍스트가 좌측에 몰리도록 유도한다. */
+    flex: 4 0 auto;
+}
+.sources-container > pre.cssBox {
+    background-color: hsl(120, 13%, 92%);
+}
+
+.sources-container + p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    line-height: 1.2;
+    border: 2px dashed yellowgreen;
+    margin: 0 0 1em;
+    padding: 5px;
+    width: auto;
+}
+
+.htmlBox .toolbar {
+    display:none;
+}
