@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>SVG animations</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #radial {
+                width:600px;
+                height:240px;
+                background-color:gainsboro;
+                border: 1px solid black;
+            }
+        </style>
+        <p>Using CSS keyframe animation</p>
+        <svg id="radial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+            <style type="text/css">
+                @keyframes s1 {
+                    0% { stop-color: red; }
+                    14% { stop-color: violet; }
+                    29% { stop-color: navy; }
+                    43% { stop-color: blue; }
+                    57% { stop-color: green; }
+                    71% { stop-color: yellow; }
+                    86% { stop-color: orange; }
+                    100% { stop-color: red; }
+                }
+                @keyframes s2 {
+                    0% { stop-color: orange; }
+                    14% { stop-color: red; }
+                    29% { stop-color: violet; }
+                    43% { stop-color: navy; }
+                    57% { stop-color: blue; }
+                    71% { stop-color: green; }
+                    86% { stop-color: yellow; }
+                    100% { stop-color: orange; }
+                }
+                @keyframes s3 {
+                    0% { stop-color: yellow; }
+                    14% { stop-color: orange; }
+                    29% { stop-color: red; }
+                    43% { stop-color: violet; }
+                    57% { stop-color: navy; }
+                    71% { stop-color: blue; }
+                    86% { stop-color: green; }
+                    100% { stop-color: yellow; }
+                }
+                @keyframes s4 {
+                    0% { stop-color: green; }
+                    14% { stop-color: yellow; }
+                    29% { stop-color: orange; }
+                    43% { stop-color: red; }
+                    57% { stop-color: violet; }
+                    71% { stop-color: navy; }
+                    86% { stop-color: blue; }
+                    100% { stop-color: green; }
+                }
+                @keyframes s5 {
+                    0% { stop-color: blue; }
+                    14% { stop-color: green; }
+                    29% { stop-color: yellow; }
+                    43% { stop-color: orange; }
+                    57% { stop-color: red; }
+                    71% { stop-color: violet; }
+                    86% { stop-color: navy; }
+                    100% { stop-color: blue; }
+                }
+                @keyframes s6 {
+                    0% { stop-color: navy; }
+                    14% { stop-color: blue; }
+                    29% { stop-color: green; }
+                    43% { stop-color: yellow; }
+                    57% { stop-color: orange; }
+                    71% { stop-color: red; }
+                    86% { stop-color: violet; }
+                    100% { stop-color: navy; }
+                }
+                @keyframes s7 {
+                    0% { stop-color: violet; }
+                    14% { stop-color: navy; }
+                    29% { stop-color: blue; }
+                    43% { stop-color: green; }
+                    57% { stop-color: yellow; }
+                    71% { stop-color: orange; }
+                    86% { stop-color: red; }
+                    100% { stop-color: violet; }
+                }
+                #s1 { 
+                    animation: s1 2s infinite; 
+                }
+                #s2 { 
+                    animation: s2 2s infinite; 
+                }
+                #s3 { 
+                    animation: s3 2s infinite; 
+                }
+                #s4 { 
+                    animation: s4 2s infinite; 
+                }
+                #s5 { 
+                    animation: s5 2s infinite; 
+                }
+                #s6 { 
+                    animation: s6 2s infinite; 
+                }
+                #s7 { 
+                    animation: s7 2s infinite; 
+                }
+            </style>
+            <defs>
+                <radialGradient id="Rrainbow" fx="0.5" fy="0.5">
+                    <stop id="s1" offset="0.0" />
+                    <stop id="s2" offset="0.16" />
+                    <stop id="s3" offset="0.33" />
+                    <stop id="s4" offset="0.5" />
+                    <stop id="s5" offset="0.67" />
+                    <stop id="s6" offset="0.83" />
+                    <stop id="s7" offset="1.0" />
+                </radialGradient>
+                <circle id="circle2" r="100" cy="110"/>
+            </defs>
+            <use xlink:href="#circle2" x="110" fill="url(#Rrainbow)"/>
+        </svg>
+    </body>
+</html>

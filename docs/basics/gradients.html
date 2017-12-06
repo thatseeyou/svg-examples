@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>SVG gradients</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #linear {
+                width:600px;
+                height:260px;
+                background-color:gainsboro;
+                border: 1px solid black;
+            }
+        </style>
+        <p>Linear gradient</p>
+        <svg id="linear" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+            <defs>
+                <linearGradient id="b2w">
+                    <stop stop-color="#000000" offset="0" />
+                    <stop stop-color="#ffffff" offset="1" />
+                </linearGradient>
+                <linearGradient id="b2w2" spreadMethod="repeat" gradientTransform="scale(0.5)">
+                    <stop stop-color="#000000" offset="0" />
+                    <stop stop-color="#ffffff" offset="1" />
+                </linearGradient>
+                <linearGradient id="b2w3" gradientTransform="scale(1.0) rotate(45)">
+                    <stop stop-color="#000000" offset="0" />
+                    <stop stop-color="#ffffff" offset="1" />
+                </linearGradient>
+                <linearGradient id="rainbow">
+                    <stop stop-color="red" offset="0.0" />
+                    <stop stop-color="orange" offset="0.16" />
+                    <stop stop-color="yellow" offset="0.33" />
+                    <stop stop-color="green" offset="0.5" />
+                    <stop stop-color="blue" offset="0.67" />
+                    <stop stop-color="navy" offset="0.83" />
+                    <stop stop-color="violet" offset="1.0" />
+                </linearGradient>
+                <rect id="box" y="20" width="100" height="100"/>
+                <circle id="circle" r="50" cy="180"/>
+            </defs>
+            <use xlink:href="#box" x="20" fill="url(#b2w)"/>
+            <use xlink:href="#box" x="130" fill="url(#b2w2)"/>
+            <use xlink:href="#box" x="240" fill="url(#b2w3)"/>
+            <use xlink:href="#box" x="350" fill="url(#rainbow)"/>
+
+            <use xlink:href="#circle" x="70" fill="url(#b2w)"/>
+            <use xlink:href="#circle" x="180" fill="url(#b2w2)"/>
+            <use xlink:href="#circle" x="290" fill="url(#b2w3)"/>
+            <use xlink:href="#circle" x="400" fill="url(#rainbow)"/>
+        </svg>
+
+        <style class="example">
+            #radial {
+                width:600px;
+                height:140px;
+                background-color:gainsboro;
+                border: 1px solid black;
+            }
+        </style>
+        <p>Radial gradient</p>
+        <svg id="radial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+            <defs>
+                <radialGradient id="Rw2b" fx="0.5" fy="0.5">
+                    <stop stop-color="#ffffff" offset="0" />
+                    <stop stop-color="#000000" offset="1" />
+                </radialGradient>
+                <radialGradient id="Rw2b2" fx="0.5" fy="0.5" gradientTransform="scale(1.3)">
+                    <stop stop-color="#ffffff" offset="0" />
+                    <stop stop-color="#000000" offset="1" />
+                </radialGradient>
+                <radialGradient id="Rrainbow" fx="0.5" fy="0.5">
+                    <stop stop-color="red" offset="0.0" />
+                    <stop stop-color="orange" offset="0.16" />
+                    <stop stop-color="yellow" offset="0.33" />
+                    <stop stop-color="green" offset="0.5" />
+                    <stop stop-color="blue" offset="0.67" />
+                    <stop stop-color="navy" offset="0.83" />
+                    <stop stop-color="violet" offset="1.0" />
+                </radialGradient>
+                <circle id="circle2" r="50" cy="60"/>
+            </defs>
+            <use xlink:href="#circle2" x="60" fill="url(#Rw2b)"/>
+            <use xlink:href="#circle2" x="170" fill="url(#Rw2b2)"/>
+            <use xlink:href="#circle2" x="280" fill="url(#Rrainbow)"/>
+        </svg>
+    </body>
+</html>
