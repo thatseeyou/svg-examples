@@ -15,7 +15,7 @@
     font-size: 14px;
     line-height: 1.2;
 }
-.sources-container > pre:nth-of-type(2) {
+.sources-container > pre:nth-of-type(n+2) {
     /* 여분의 공간은 1:4의 비율로 나누어서 텍스트가 좌측에 몰리도록 유도한다. */
     flex: 4 0 auto;
 }
@@ -33,6 +33,6 @@
     width: auto;
 }
 
-.htmlBox .toolbar {
+.htmlBox .toolbar, .scriptBox .toolbar {
     display:none;
 }

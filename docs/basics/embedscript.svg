@@ -1,0 +1,16 @@
+<svg 
+  xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Embedded javascript in SVG</title>
+  <rect x="20" y="20" width="100" height="100" fill="blue" stroke="black" stroke-width="10"/>
+  <script><![CDATA[  
+    var rect = document.querySelector("rect");
+    rect.style.stroke = "red";
+
+    function changeColor() {
+      rect.style.stroke = (rect.style.stroke == "red") ? "blue" : "red";
+    }
+    setInterval(changeColor, 300);
+  ]]>
+  </script>
+</svg>

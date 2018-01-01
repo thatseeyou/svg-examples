@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>SVG with Javascript</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-1 svg {
+                width:300px;
+                height:200px;
+                background-color:gainsboro;
+            }
+        </style>
+        <p>Javascript DOM을 조작해서 SVG를 만들 수 있다.</p>
+        <div id="ex-1">
+        </div>
+        <script type="text/javascript">
+            (function() {
+                var ns = {svg:"http://www.w3.org/2000/svg", xlink: "http://www.w3.org/1999/xlink"};
+                var svg = document.createElementNS(ns.svg, "svg");
+                var rect = document.createElementNS(ns.svg, "rect");
+                rect.setAttribute("x", "20");
+                rect.setAttribute("y", "20");
+                rect.setAttribute("width", "100");
+                rect.setAttribute("height", "100");
+                rect.setAttribute("fill", "blue");
+                rect.setAttribute("stroke", "black");
+                rect.setAttribute("stroke-width", "2");
+
+                svg.appendChild(rect);
+                document.getElementById('ex-1').appendChild(svg);
+            })();
+        </script>
+
+        <style class="example">
+            #ex-2 svg {
+                width:300px;
+                height:200px;
+                background-color:gainsboro;
+            }
+        </style>
+        <p>Namespace를 지정해서 생성하지 않으면 SVG가 아닌 HTML element가 생성될 뿐이다.</p>
+        <div id="ex-2">
+        </div>
+        <script type="text/javascript">
+            (function() {
+                var svg = document.createElement("svg");
+                var rect = document.createElement("rect");
+                rect.setAttribute("x", "20");
+                rect.setAttribute("y", "20");
+                rect.setAttribute("width", "100");
+                rect.setAttribute("height", "100");
+                rect.setAttribute("fill", "blue");
+                rect.setAttribute("stroke", "black");
+                rect.setAttribute("stroke-width", "0");
+
+                svg.appendChild(rect);
+                document.getElementById('ex-2').appendChild(svg);
+            })();
+        </script>
+
+        <style class="example">
+            #ex-innerHTML svg {
+                width:300px;
+                height:200px;
+                background-color:gainsboro;
+            }
+        </style>
+        <p>innerHTML을 이용해서 생성하는 것도 가능하다. 지원하지 않는 브라우저도 있다.</p>
+        <div id="ex-innerHTML">
+        </div>
+        <script type="text/javascript">
+            document.getElementById('ex-innerHTML').innerHTML='<svg><rect x="20" y="20" width="100" height="100" fill="blue" stroke="black" stroke-width="0"></rect></svg>';
+        </script>
+
+        <style class="example">
+        </style>
+        <p>HTML의 SVG 안에서 javascript를 사용할 수 있다. Scope이 SVG 내부로 제한되는 것은 아니다.</p>
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Embedded javascript in SVG</title>
+            <rect id="rect" x="20" y="20" width="100" height="100" fill="blue" stroke="black" stroke-width="10"/>
+            <script>//<![CDATA[  
+                var rect = document.querySelector("#rect");
+                rect.style.stroke = "red";
+
+                function changeColor() {
+                    rect.style.stroke = (rect.style.stroke == "red") ? "blue" : "red";
+                }
+                setInterval(changeColor, 300);
+            //]]>
+            </script>
+        </svg>
+
+        <style class="example">
+            #ex-embed a {
+                display: block;
+                font-size: 16px;
+            }
+            #ex-embed img {
+                display: block;
+            }
+        </style>
+        <p>SVG는 내부에 javascript를 포함할 수 있다. 독립적으로 SVG 파일을 열 경우에는 동작하지만 &lt;img&gt;로 읽을 경우에는 동작하지 않는다. &lt;object&gt;를 이용하면 javascript가 동작한댜.</p>
+        <div id="ex-embed">
+            <a href="./embedscript.svg">Open SVG</a>
+            <img src="./embedscript.svg"></img>
+            <object data="./embedscript.svg" type="image/svg+xml"></object>
+        </div>
+        
+    </body>
+</html>

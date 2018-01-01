@@ -61,22 +61,19 @@ class Utils {
     /**
      * Create Prism input format from code container
      * 
-     * <div|svg>HTML code</div|svg> => <pre class="htmlBox"><code class="language-markup">HTML code</code></pre>
      * <style>CSS code</style> => <pre class="cssBox"><code class="language-css">CSS code</code></pre>
+     * <div|svg>HTML code</div|svg> => <pre class="htmlBox"><code class="language-markup">HTML code</code></pre>
+     * <script>Javascript code</script> => <pre class="scriptBox"><code class="language-javascript">Javascript code</code></pre>
      * 
      * @param {Element} sourceContainer - Source code text will be extracted from sourceElement
-     * @param {Element} where - default: nextElementSibling
      */
-    static createPrismCodeElementFromSourceContainer(sourceContainer:Element, where?:Element) {
-        let container = sourceContainer.parentElement as Element;
-        if (where == undefined) {
-            where = sourceContainer.nextElementSibling as Element;
-        }
-
+    static createPrismCodeElementFromSourceContainer(sourceContainer:Element):Element {
+        // 1. Create <pre><code>
         var preBox = document.createElement("pre");
         var codeBox = document.createElement("code");
         preBox.appendChild(codeBox);
 
+        // 2. extract contents from source
         if (sourceContainer.nodeName == 'STYLE') {
             preBox.className = 'cssBox';
             codeBox.className = 'language-css';
@@ -87,11 +84,16 @@ class Utils {
             codeBox.className = 'language-markup';
             codeBox.textContent = Utils.extractHtmlStringFromContainer(sourceContainer as HTMLElement);
         }
+        else if (sourceContainer.nodeName == 'SCRIPT') {
+            preBox.className = 'scriptBox';
+            codeBox.className = 'language-javascript';
+            codeBox.textContent = Utils.extractJavascriptStringFromContainer(sourceContainer as HTMLElement);
+        }
         else {
             codeBox.className = 'language-markup';
         }
 
-        container.insertBefore(preBox, where);
+        return preBox;
     }
 
     /**
@@ -101,6 +103,31 @@ class Utils {
      */
     static extractHtmlStringFromContainer(containerElement:HTMLElement):string {
         let content = containerElement.outerHTML;
+
+        // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
+        let lines = content.split('\n');
+        lines.shift(); /* lines from 2nd line */
+        let minIndentation = lines.reduce((minIndentation:number, line:string) => {
+            let numIndentation = line.search(/[^\s]+/);
+
+            if (numIndentation < 0)
+                return minIndentation;
+
+            return (numIndentation < minIndentation) ? numIndentation : minIndentation;
+        }, 8);
+
+        content = Array(minIndentation + 1).join(' ') + content;
+
+        return content;
+    }
+
+    /**
+     * Extract Javascript string from container element 
+     * 
+     * @param {HTMLElement} containerElement 
+     */
+    static extractJavascriptStringFromContainer(containerElement:HTMLElement):string {
+        let content = containerElement.innerHTML;
 
         // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
         let lines = content.split('\n');
@@ -191,21 +218,27 @@ class Utils {
     }
 
     /**
-     * Append htmlBox & cssBox to <script> like followings.
+     * Append htmlBox & cssBox to <style> like followings.
      * 
-     * <script>...</script>
+     * <style>...</style>
      * <div class="sources-container">
      *   <pre class="cssBox"><code class="language-css"></code></pre>
      *   <pre class="htmlBox"><code class="language-markup></code></pre>
+     *   <pre class="scriptBox"><code class="language-javascript></code></pre>
      * </div>
      * <p>...</p>
      * <div|svg>...</div|svg>
+     * <script>...</script>
      */
     static createCodeElementAll() {
         let exampleStyles = document.body.querySelectorAll("style.example");
 
         Array.prototype.forEach.call(exampleStyles, (exampleStyle:Element) => {
-            // 1. html
+            // 1-1. style
+            let cssBox = Utils.createPrismCodeElementFromSourceContainer(exampleStyle);
+
+            // 1-2. html
+            let htmlBox = null 
             let next = exampleStyle.nextElementSibling;
             if (next) {
                 // <p>는 opitonal
@@ -213,23 +246,30 @@ class Utils {
                     next = next.nextElementSibling;
                 }
                 if (next && (next.nodeName == 'DIV' || next.nodeName == 'svg')) {
-                    Utils.createPrismCodeElementFromSourceContainer(next, exampleStyle.nextElementSibling as Element);
+                    htmlBox = Utils.createPrismCodeElementFromSourceContainer(next);
                 }
             }
 
-            // 2. style
-            Utils.createPrismCodeElementFromSourceContainer(exampleStyle);
+            // 1-3. javascript
+            let scriptBox = null
+            if (next) {
+                next = next.nextElementSibling;
+                if (next && next.nodeName == 'SCRIPT') {
+                    scriptBox = Utils.createPrismCodeElementFromSourceContainer(next);
+                }
+            }
 
-            // 3. wrap html and style with container
-            let cssBox = exampleStyle.nextElementSibling as Element;
-            let htmlBox = cssBox.nextElementSibling as Element;
-
+            // 2. create sources container
             let container = document.createElement("div");
             container.className = "sources-container";
-            (<Element>(exampleStyle.parentElement)).insertBefore(container, cssBox);
+            (<Element>(exampleStyle.parentElement)).insertBefore(container, exampleStyle.nextElementSibling);
             
+            // 3. add cssBox, htmlBox, scriptBox
             container.appendChild(cssBox);
-            container.appendChild(htmlBox);
+            if (htmlBox)
+                container.appendChild(htmlBox);
+            if (scriptBox)
+                container.appendChild(scriptBox);
         })
 
         // 3. buttons
@@ -243,15 +283,18 @@ class Utils {
      * <style class="example">...</style>
      * <p>...optional...</p>
      * <div|svg>...HTML...</div|svg>
+     * <script>...SCRIPT...</script>
      * 
      * 아래 함수를 수행하면 다음과 같이 <style> 다음에 prism이 생성한 코드가 추가된다. 
      * <style class="example">...</style>
      * <div class="sources-container">
      *   <pre class="cssBox language-css code-toolbar">...</pre>
      *   <pre class="htmlBox language-markup code-toolbar">...</pre>
+     *   <pre class="scriptBox language-javascript code-toolbar">...</pre>
      * </div>
      * <p>...optional...</p>
      * <div|svg>...HTML...</div|svg>
+     * <script>...SCRIPT...</script>
      */
     static configureShowSources() {
         Utils.ready(() => {
