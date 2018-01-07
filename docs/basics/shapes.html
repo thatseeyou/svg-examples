@@ -117,12 +117,14 @@
             xmlns:xlink namespace can be omitted in the modern browsers. 
             Chrome browser inserts namespace automatically if namespace declaration is omitted.
             Not-namespaced href is not supported by some browsers(ex. Safari).
+
+            '#use rect' selector does not work in Firefox. (Chrome, Safari OK)
         </p>
         <div id="use">
-            <svg id="use" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
                 <!-- inside -->
                 <style type="text/css">      
-                    #id rect, #id circle {
+                    #use rect, #use circle {
                         fill: blue;
                         stroke: black;
                     }
@@ -138,7 +140,7 @@
                     <use xlink:href="#circle" x="180" y="190" stroke-width="3"/>
                 </g>
             </svg>
-            <svg id="use" xmlns="http://www.w3.org/2000/svg" xml:lang="en">
+            <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en">
                 <!-- inside -->
                 <style type="text/css">      
                     rect {
