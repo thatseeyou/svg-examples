@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Samples from Chapter 5</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-1 {
+            }
+        </style>
+        <p>x1, y1 속성을 생략하면 0이다. initialzed class는 일부 브라우저에서 생성된 SVG와 javascript 코드가 함께 저장될 때의 문제점을 해결하기 위한 코드이다. 독립된 SVG파일인 경우에 해당한다.
+            svg의 namespaceURI를 통해서 NS에 접근할 수도 있다.
+        </p>
+        <svg id="ex-1" xmlns="http://www.w3.org/2000/svg" xml:lang="en" height="10cm" width="10cm">
+            <title>Line Art</title>
+            <style type="text/css">
+                #ex-1 line {
+                    stroke: purple;
+                }
+                #ex-1 svg {
+                    margin: 1cm;
+                }
+            </style>
+        </svg>
+        <script>
+            (function () {
+                var size = 10;
+                var doc = document;
+                var svg = doc.getElementById("ex-1");
+                var svgNS = svg.namespaceURI;
+
+                if (!(svg.classList && svg.classList.contains("initialized")))
+                    draw();
+
+                function draw() {
+                    var l1, l2;
+                    for (var i = 0; i <= size; i++) {
+                        l1 = doc.createElementNS(svgNS, "line");
+                        l1.setAttribute("x1", i + "cm");
+                        l1.setAttribute("x2", size + "cm");
+                        l1.setAttribute("y2", i + "cm");
+                        svg.appendChild(l1);
+
+                        l2 = doc.createElementNS(svgNS, "line");
+                        l2.setAttribute("y1", i + "cm");
+                        l2.setAttribute("x2", i + "cm");
+                        l2.setAttribute("y2", size + "cm");
+                        svg.appendChild(l2);
+                    }
+                    if (svg.classList)
+                        svg.classList.add("initialized");
+                }
+            })()
+        </script>
+
+        <style class="example">
+            #ex-3 {
+            }
+        </style>
+        <p>rect는 fill이 가능하다.</p>
+        <svg id="ex-3" xmlns="http://www.w3.org/2000/svg" xml:lang="en" height="9cm" width="9cm">
+            <title>Checkerboard</title>
+            <style type="text/css">
+                #ex-3 .board {
+                    fill: saddleBrown;
+                }
+        
+                #ex-3 .white {
+                    fill: linen;
+                }
+        
+                #ex-3 .black {
+                    fill: #222;
+                }
+            </style>
+        </svg>
+        <script>
+            (function () {
+                var squares = 8;
+                var doc = document;
+                var svg = doc.getElementById("ex-3");
+                var svgNS = svg.namespaceURI;
+
+                if (!(svg.classList && svg.classList.contains("initialized")))
+                    draw();
+
+                function draw() {
+                    var board = doc.createElementNS(svgNS, "rect");
+                    board.setAttribute("width", "100%");
+                    board.setAttribute("height", "100%");
+                    board.setAttribute("class", "board");
+                    svg.appendChild(board);
+
+                    var square;
+                    for (var i = 0; i < squares; i++) {
+                        for (var j = 0; j < squares; j++) {
+                            square = doc.createElementNS(svgNS, "rect");
+                            square.setAttribute("x", (i + 0.5) + "cm");
+                            square.setAttribute("y", (j + 0.5) + "cm");
+                            square.setAttribute("width", "1cm");
+                            square.setAttribute("height", "1cm");
+                            square.setAttribute("class",
+                                (i + j) % 2 ? "black" : "white");
+                            svg.appendChild(square);
+                        }
+                    }
+                    svg.classList.add("initialized");
+                }
+            })()
+        </script>
+
+        <style class="example">
+            #ex-4 {
+            }
+        </style>
+        <p>rect의 rx, ry에 대한 예제</p>
+        <svg id="ex-4" xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="14cm" height="11cm">
+            <title>Splash</title>
+            <style type="text/css">
+                .water {
+                    fill: paleTurquoise;
+                }
+                .ripples {
+                    stroke: lightSeaGreen;
+                    fill: lightSeaGreen;
+                    fill-opacity: 0.15;
+                }
+                .stone {
+                    fill: darkSlateGray;
+                }
+            </style>
+            <rect class="water" width="14cm" height="11cm" />
+            <g class="ripples">
+                <rect x="5.75cm" y="4.75cm" width="2.5cm" height="1.5cm" rx="0.25cm" />
+                <rect x="5cm" y="4cm" width="4cm" height="3cm" rx="1cm" />
+                <rect x="4cm" y="3cm" width="6cm" height="5cm" rx="2cm" />
+                <rect x="3cm" y="2.5cm" width="8cm" height="6cm" rx="3cm" ry="2.5cm" />
+                <rect x="2cm" y="2cm" width="10cm" height="7cm" rx="4cm" ry="3cm" />
+                <rect x="1cm" y="1cm" width="12cm" height="9cm" rx="5.5cm" ry="4cm" />
+                <rect x="0.5cm" y="0.5cm" width="13cm" height="10cm" rx="6.5cm" ry="5cm" />
+            </g>
+            <rect class="stone" x="6cm" y="5cm" width="2cm" height="1cm" rx="0.1cm" />
+        </svg>
+
+        <style class="example">
+            #ex-7 {
+            }
+        </style>
+        <p>ellipse에 대한 예제</p>
+        <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="4.3in" height="4.8in">
+            <title>Quizzical Elliptical Face</title>
+            <ellipse fill="chocolate" rx="55%" ry="60%" cx="50%" cy="50%" />
+            <g fill="sienna">
+                <ellipse cx="1.1in" cy="1.3in" rx="1in" ry="48pt" />
+                <ellipse cx="3.2in" cy="1.3in" rx="1in" ry="40pt" />
+                <ellipse cx="50%" cy="55%" rx="8%" ry="22%" />
+                <circle cx="45%" cy="71%" r="6%" />
+                <circle cx="56%" cy="68%" r="6%" />
+            </g>
+            <g fill="white">
+                <ellipse cx="1.1in" cy="1.3in" rx="70pt" ry="38pt" />
+                <ellipse cx="3.2in" cy="1.3in" rx="70pt" ry="24pt" />
+            </g>
+            <g fill="black" stroke="blue" stroke-width="16pt" stroke-opacity="0.6">
+                <circle cx="1.6in" cy="1.3in" r="16pt" />
+                <circle cx="3.5in" cy="1.3in" r="16pt" />
+            </g>
+            <ellipse fill="white" stroke="crimson" stroke-width="20pt" cx="2.8in" cy="4in" rx="32pt" ry="18pt" />
+            <g fill="none" stroke="#310" stroke-width="6pt">
+                <ellipse cx="45%" cy="22pt" rx="30pt" ry="22pt" />
+                <ellipse cx="40%" cy="10pt" rx="30pt" ry="20pt" />
+                <ellipse cx="30%" cy="16pt" rx="30pt" ry="22pt" />
+                <ellipse cx="20%" cy="16pt" rx="24pt" ry="20pt" />
+                <ellipse cx="15%" cy="22pt" rx="22pt" ry="16pt" />
+                <ellipse cx="50%" cy="16pt" rx="24pt" ry="22pt" />
+                <ellipse cx="55%" cy="22pt" rx="30pt" ry="20pt" />
+                <ellipse cx="60%" cy="10pt" rx="30pt" ry="22pt" />
+                <ellipse cx="75%" cy="16pt" rx="34pt" ry="18pt" />
+                <ellipse cx="80%" cy="12pt" rx="24pt" ry="22pt" />
+                <ellipse cx="85%" cy="24pt" rx="22pt" ry="16pt" />
+            </g>
+        </svg>
+
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Percentage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-rect svg:nth-of-type(2n) {
+                background-color: aliceblue;
+            }
+            #ex-rect svg:nth-of-type(2n+1) {
+                background-color:azure;
+            }
+            #ex-rect svg {
+                width: 200px;
+                height: 200px;
+            }
+            #ex-rect-6 {
+                width: 400px !important;
+                height: 200px !important;
+            }
+            #ex-rect svg rect {
+                fill: royalblue;
+                stroke: blueviolet;
+                stroke-width: 4;
+            }
+        </style>
+        <p>%의 기준은 svg의 width, height가 된다. rx, ry도 rect의 width, height가 아닌 svg의 width, height가 기준이 된다.</p>
+        <div id="ex-rect" class="flex">
+            <svg id="ex-rect-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="100" height="80"></rect>
+            </svg>
+            <svg id="ex-rect-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="50%" height="40%"></rect>
+            </svg>
+            <svg id="ex-rect-3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="100" height="80" rx="20"></rect>
+            </svg>
+            <svg id="ex-rect-4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="100" height="80" rx="20%"></rect>
+            </svg>
+            <svg id="ex-rect-5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="100" height="80" rx="10%"></rect>
+            </svg>
+            <svg id="ex-rect-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <rect x="50" y="50" width="100" height="80" rx="10%"></rect>
+            </svg>
+        </div>
+
+        <style class="example">
+            #ex-ellipse svg:nth-of-type(2n) {
+                background-color: aliceblue;
+            }
+            #ex-ellipse svg:nth-of-type(2n+1) {
+                background-color:azure;
+            }
+            #ex-ellipse svg {
+                width: 200px;
+                height: 200px;
+            }
+            #ex-ellipse-3 {
+                width: 400px !important;
+                height: 200px !important;
+            }
+            #ex-ellipse svg ellipse {
+                fill: royalblue;
+                stroke: blueviolet;
+                stroke-width: 4;
+            }
+        </style>
+        <p>ellipse의 rx, ry의 % 기준은 svg의 width, height가 된다.</p>
+        <div id="ex-ellipse" class="flex">
+            <svg id="ex-ellipse-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <ellipse cx="50%" cy="50%" rx="50" ry="40"></ellipse>
+            </svg>
+            <svg id="ex-ellipse-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <ellipse cx="50%" cy="50%" rx="25%" ry="20%"></ellipse>
+            </svg>
+            <svg id="ex-ellipse-3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <ellipse cx="50%" cy="50%" rx="25%" ry="20%"></ellipse>
+            </svg>
+        </div>
+
+        <style class="example">
+            #ex-circle svg:nth-of-type(2n) {
+                background-color: aliceblue;
+            }
+            #ex-circle svg:nth-of-type(2n+1) {
+                background-color:azure;
+            }
+            #ex-circle svg {
+                width: 400px;
+                height: 200px;
+            }
+            #ex-circle-3 {
+                width: 400px !important;
+                height: 200px !important;
+            }
+            #ex-circle svg circle {
+                fill: royalblue;
+                stroke: blueviolet;
+                stroke-width: 4;
+            }
+        </style>
+        <p>circle의 r처럼 x, y 방향이 없는 경우는 대각선을 sqrt(2)로 나눈 값이 기준이 된다.</p>
+        <div id="ex-circle" class="flex">
+            <svg id="ex-circle-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <circle cx="50%" cy="50%" r="50"></circle>
+            </svg>
+            <svg id="ex-circle-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en">
+                <circle cx="50%" cy="50%" r="15.8%"></circle>
+            </svg>
+        </div>
+    </body>
+</html>
